@@ -6,6 +6,8 @@
   "author": "Arthur Prather, Jr",
   "license": "MIT",
   "scripts": {
+    "start": "node server/server.js",
+    "heroku-postbuild": "yarn run build:prod",
     "serv": "live-server public/",
     "dev": "webpack-dev-server",
     "build:dev": "webpack",
@@ -24,6 +26,7 @@
     "enzyme": "3.2.0",
     "enzyme-adapter-react-16": "^1.1.0",
     "enzyme-to-json": "3.2.2",
+    "express": "4.16.0",
     "extract-text-webpack-plugin": "3.0.2",
     "jest": "21.2.1",
     "live-server": "^1.2.0",
