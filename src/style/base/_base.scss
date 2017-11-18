@@ -1,0 +1,25 @@
+html{ font-size: 62.5%; }
+body{
+    font-family: "Helvetica", Arial, sans-serif;
+    font-size: 1.6rem;
+}
+
+//reset header margin.
+h1, h2, h3, h4, h5{ margin: 0 }
+
+.container{
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: $size-x1;
+}
+
+button{
+    cursor: pointer;
+    &:disabled{
+        cursor: default;
+    }
+}
+
+.is-active{
+    font-weight: bold;
+}
