@@ -55,7 +55,6 @@ export class EditExpensePage extends Component{
 // mapStateToProps allows us define what values from the Redux store the component should have access to. We can use it to give the component access to the entire store or just a specific subset of it's data.
 const mapStateToProps = (state, props) => ({
     expense: state.expenses.find((expense) => expense.id === props.match.params.id),
-
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
