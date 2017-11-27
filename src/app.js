@@ -8,9 +8,12 @@ import { setTextFilter } from './actions/filters';
 import getVisibleExpenses from './selectors/expense';
 import './style/main.scss'; 
 import 'react-dates/lib/css/_datepicker.css';
+import './firebase/firebase';
 
 const store = configureStore();
-console.log('Testing');
+
+console.log('I made a request to change data');
+
 const jsx = (
     <Provider store={store}>
         <AppRouter />

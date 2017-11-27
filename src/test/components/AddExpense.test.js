@@ -2,15 +2,42 @@ import React from 'react'
 import { shallow } from 'enzyme';
 import { AddExpensePage } from '../../components/AddExpense';
 import ExpenseForm from '../../components/ExpenseForm';
-import expenses from '../fixures/expenses';
+import fixExpenses from '../fixures/expenses';
 
-//Method 1 quick ways
-let addExpense, history, wrapper;
+//** Method 1 quick ways **/
+// let addExpense, history, wrapper;
+
+// beforeEach(() => {
+//     addExpense = jest.fn();
+//     history = {push: jest.fn() };
+//     wrapper = shallow (<AddExpensePage addExpense={addExpense} history={history} />);
+// });
+
+// test('Render add Expense correctly', () => {
+//     expect(wrapper).toMatchSnapshot()
+// });
+
+// //
+// test('should handle on Add Expense', () => {
+//     wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
+//     expect(history.push).toHaveBeenLastCalledWith('/');
+//     expect(addExpense).toHaveBeenLastCalledWith(expenses[1]);
+// });
+
+//** Method 1a (Test data exporting firebase) **/
+/*
+ This is similar as Method 1 except for changing...
+1. "addExpense" into "startAddExpense"
+2. 
+
+*/
+
+let startAddExpense, history, wrapper;
 
 beforeEach(() => {
-    addExpense = jest.fn();
-    history = {push: jest.fn() };
-    wrapper = shallow (<AddExpensePage addExpense={addExpense} history={history} />);
+    startAddExpense = jest.fn();
+    history = { push: jest.fn() };
+    wrapper = shallow (<AddExpensePage startAddExpense={startAddExpense} history={history} />);
 });
 
 test('Render add Expense correctly', () => {
@@ -19,12 +46,13 @@ test('Render add Expense correctly', () => {
 
 //
 test('should handle on Add Expense', () => {
-    wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
+    wrapper.find('ExpenseForm').prop('onSubmit')(fixExpenses[1]);
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(addExpense).toHaveBeenLastCalledWith(expenses[1]);
+    expect(startAddExpense).toHaveBeenLastCalledWith(fixExpenses[1]);
 });
 
-//Method 2 Duplications
+
+//** Method 2 Duplications **/
 //
 // test('Render add Expense correctly', () => {
 //     const onSubmit = jest.fn();
@@ -42,3 +70,4 @@ test('should handle on Add Expense', () => {
 //     expect(history.push).toHaveBeenLastCalledWith('/');
 //     expect(onSubmit).toHaveBeenLastCalledWith(expenses[1]);
 // });
+

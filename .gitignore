@@ -1,4 +1,11 @@
+##Directories
 node_modules
-.vscode
-tools
 public/dist/
+.vscode
+
+##Files
+firebase/firebase-training.js
+tools
+.env.dev
+.env.test
+
