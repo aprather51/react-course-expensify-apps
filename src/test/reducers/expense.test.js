@@ -68,7 +68,17 @@ test('Terminate Edit Expenses if ID is not found', () => {
         }
     };
 
-    const stateResult = expensesReducer(expenses,action)
+    const stateResult = expensesReducer(expenses,action);
     expect(stateResult).toEqual(expenses);
 });
+
+test('Set expenses', () => {
+    const action = {
+        type: 'SET_EXPENSES',
+        expenses: [expenses[1]]
+    }
+
+    const stateResult = expensesReducer(expenses, action);
+    expect(stateResult).toEqual([expenses[1]]);
+})
 

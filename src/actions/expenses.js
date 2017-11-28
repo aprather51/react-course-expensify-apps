@@ -1,4 +1,3 @@
-
 import uuid from 'uuid';
 import database from '../firebase/firebase'
 
@@ -68,3 +67,38 @@ export const editExpense = (id, update) => ({
     id,
     update
 });
+
+//SET_EXPENSE
+export const setExpenses = (expenses) => ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+//FETCH THE DATA AT START
+export const startSetExpenses =  () => {
+    /*Return with dispatch variable to get darta */
+    return (dispatch) => {
+        /* Return with promise string. Collect data reference called expenses from firebase with value 
+        at once. When data is successfully obtained, it proceed to then() call with snapshot variable.
+        The snapshot variable snaps at object structure.*/
+        return database.ref('expenses').once('value').then((snapshot) => {
+            
+            /* setting up expenses with nothing */
+            const expenses = [];
+
+            /* Collect object structure and show list of items in array, Since snapshot isn't working
+            best with redux. childSnapshot is get called as variable.*/
+            snapshot.forEach((childSnapshot) => {
+                /* To push() childSnapshot propties such as key and values to firebase*/
+                expenses.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            /* dispatching setExpense action with expense variable*/
+            dispatch(setExpenses(expenses))
+        });
+       
+    };
+};
