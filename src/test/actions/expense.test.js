@@ -3,12 +3,14 @@ import thunk from 'redux-thunk';
 import expenses from '../fixures/expenses';
 import database from '../../firebase/firebase';
 import { 
-    startAddExpense, 
     addExpense, 
-    removeExpense, 
+    startAddExpense, 
+    removeExpense,
+    startRemoveExpense,
     editExpense, 
     setExpenses,
-    startSetExpenses
+    startSetExpenses,
+    
  } from '../../actions/expenses';
 
 
@@ -24,6 +26,7 @@ beforeEach((done) => {
     database.ref('expenses').set(expensesData).then(() => done());
 });
 
+//REMOVE ---------------------
 test('Should set up remove expense action object', () => {
     
         const action = removeExpense({ id: 'abc123'});
@@ -32,6 +35,24 @@ test('Should set up remove expense action object', () => {
             id: 'abc123'
         });
     });
+
+test('Should remove expense data from firebase', (done) => {
+    const store = createMockStore({});
+    const id = expenses[2].id;
+    store.dispatch(startRemoveExpense({ id })).then(() => {
+        const actions = store.getActions();
+        expect(actions[0]).toEqual({
+            type: 'REMOVE_EXPENSE',
+            id 
+        });
+        return database.ref(`expenses/${id}`).once('value');
+        }).then((snapshot) => {
+            expect(snapshot.val()).toBeFalsy();
+            done();
+        });
+});
+
+//EDIT ------------------------------------
 
 test('Should set up edit expense action object', () => {
     
@@ -43,7 +64,15 @@ test('Should set up edit expense action object', () => {
                 note:'update me' 
             }
         });
-    });    
+});
+    
+// test('Should edit expense data from firebase', (done) => {
+//     const store = createMockStore({});
+//     const id = expenses[2].id;
+//     store.dispatch(startEditExpense({ id}))
+// });
+    
+//ADD --------------------------------------------------
 
 test('Should set up Add expense action object with provide values', () => {
     
@@ -139,6 +168,8 @@ test('Add expense with default to database and store',(done) => {
                     done();
                 });
     });
+
+//FETCH -------------------------------------------------
 
 test('Set expense action object with data', () => {
     const action = setExpenses(expenses);

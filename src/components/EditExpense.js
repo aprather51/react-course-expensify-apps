@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ExpenseForm from './ExpenseForm';
-import { editExpense, removeExpense  } from '../actions/expenses';
+import { editExpense, startRemoveExpense } from '../actions/expenses';
 
 export class EditExpensePage extends Component{
     onSubmit = (expense) => {
@@ -10,7 +10,7 @@ export class EditExpensePage extends Component{
     }
 
     onRemove = () => {
-        this.props.removeExpense({ id: this.props.expense.id });
+        this.props.startRemoveExpense({ id: this.props.expense.id });
         this.props.history.push('/');
     }
     render(){
@@ -24,9 +24,9 @@ export class EditExpensePage extends Component{
             />
             <button onClick={this.onRemove}>Remove</button>
         </div>
-        )
+        );
     }
-}
+};
 // // const EditExpensePage = (props) =>{ 
 // //     console.log(props)
 // //     return(
@@ -52,15 +52,15 @@ export class EditExpensePage extends Component{
 // // };
 
 
-// mapStateToProps allows us define what values from the Redux store the component should have access to. We can use it to give the component access to the entire store or just a specific subset of it's data.
+//mapStateToProps allows us define what values from the Redux store the component should have access to. We can use it to give the component access to the entire store or just a specific subset of it's data.
 const mapStateToProps = (state, props) => ({
     expense: state.expenses.find((expense) => expense.id === props.match.params.id),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
     editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-    removeExpense: (data) => dispatch(removeExpense(data))
+    startRemoveExpense: (data) => dispatch(startRemoveExpense(data))
 });
 
-export default connect(undefined, mapStateToProps, mapDispatchToProps)(EditExpensePage);
+export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);
 
